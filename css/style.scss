@@ -1,0 +1,767 @@
+@use './vars' as *;
+@use './utils' as *;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: $font-main;
+    font-size: $font-size-main;
+    color: $color-dark;
+    a {
+        text-decoration: none;
+    }
+    p, h1, h2, h3 {
+        margin: 0;
+    }
+    fieldset, label {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 4;
+    background-color: $color-dark;
+    border-bottom: 3px solid $color-dark;
+    .header-container {
+        @include flex-box(space-between, center, row);
+        @include section-padding(1rem 10rem, 1rem 2rem);
+        button.hamburger {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            .hamburger-icon {
+                height: 20px;
+            }
+        }
+        .hamburger {
+            display: none;
+            @media only screen and (max-width: 992px) {
+                display: flex;
+            }
+        }
+        nav {
+            @media only screen and (max-width: 992px) {
+                @include flex-box(none, center, column);
+                position: fixed;
+                background-color: $color-dark;
+                width: 100%;
+                inset: 0;
+                top: 5rem;
+                padding-top: 2rem;
+                transform: translateX(100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+            }
+            a {    
+                color: $color-light;
+                opacity: 0.7;
+                padding: 2rem 0;
+                margin-left: 2rem;
+                &:hover {
+                    opacity: 1;
+                    border-bottom: 3px solid $color-r;
+                    transition: 0.25s ease-in-out;
+                }
+                @media only screen and (max-width: 992px) {
+                    padding: 2rem 0;
+                    margin: 0;
+                    font-size: $font-m;
+                    font-weight: 600;
+                }
+            }
+        }
+        .show {
+            transform: translateX(0);
+            opacity: 0.8;
+            pointer-events: auto;
+        }
+    }
+}
+
+main {
+    .landing-page {
+        @include flex-box(space-between, none, row);
+        @include section-padding(14rem 10rem, 10rem 2rem);
+        @media only screen and (max-width: 992px) {
+            @include flex-box(space-between, center, column);
+        }
+        @include background-image(url('../assets/landing-bg.svg'), $color-overlay-dark, $color-overlay-dark);
+        .landing-page-info {
+            font-size: $font-s;
+            margin-right: 8rem;
+            color: $color-light;
+            @media only screen and (max-width: 992px) {
+                margin-right: 0;
+                margin-bottom: 4rem;
+            }
+            h1 {
+                margin-top: 2rem;
+                font-size: $font-xxl;
+            }
+            p {
+                margin: 3rem 0;
+                @include heading-line-left($color-light, 5rem);
+            }
+            img {
+                @media only screen and (max-width: 992px) {
+                    display: block;
+                    margin: auto;
+                }
+            }
+        }
+        .download {
+            color: $color-light;
+            background-color: transparent;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: 2px solid $color-light;
+            cursor: pointer;
+            &:hover {
+                background-color: $color-r;
+                border: 2px solid $color-r;
+                transition: 0.25s ease-in-out;
+            }
+            @media only screen and (max-width: 992px) {
+                display: block;
+                margin: auto;
+            }
+        }
+
+        .subscription-form {
+            max-width: 22rem;
+            min-width: 22rem;
+            border-radius: 5px;
+            #subscription-form {
+                background-color: $color-light;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+            .heading {
+                text-align: center;
+                font-size: $font-l;
+                font-weight: 600;
+                background-color: $color-grey;
+                padding: 1rem;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                span {
+                    text-transform: uppercase;
+                    color: $color-r;
+                }
+            }
+            fieldset {
+                padding: 0 3rem;
+            }
+            legend {
+                font-size: $font-s;
+                font-weight: 600;
+                padding: 1rem 0;
+            }
+            @include input-text;
+            .radios {
+                display: flex;
+                margin-bottom: 1rem;
+                @include radio-button-label;
+            }
+
+            .submit {
+                width: 100%;
+                padding: 1rem;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                margin-top: 2rem;
+                @include button;
+            }
+        }
+    }
+
+    .social-media {
+        background-color: $color-light;
+        @include flex-box(none, center, row);
+        gap: 5rem;
+        @include section-padding(1rem 10rem, 3rem 2rem);
+        @media only screen and (max-width: 992px) {
+            @include flex-box(none, normal, column);
+            gap: 2rem;
+        }
+        .social-media-info {
+            flex: 3;
+            h3 {
+                font-size: $font-l;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+        }
+        .social-media-icons {
+            flex: 5;
+            @include flex-box(space-between, none, row);
+            @media only screen and (max-width: 992px) {
+                @include flex-box(center, none, row);
+                gap: 3rem;
+            }
+        }
+    }
+
+    .interactive-tabs {
+        scroll-margin-top: 80px;
+        @include flex-box(center, none, row);
+        gap: 5rem;
+        @include section-padding(5rem 10rem, 3rem 2rem);
+        @include background-image(url('../assets/tabs-bg.png'), $color-overlay-one, $color-overlay-two);
+        @media only screen and (max-width: 992px) {
+            @include flex-box(center, center, column);
+            gap: 2rem;
+        }
+        .tabs-buttons {
+            @include flex-box(none, none, column);
+            gap: 1rem;
+            width: 7rem;
+            @media only screen and (max-width: 992px) {
+                @include flex-box(center, none, row);
+                width: 100%;
+            }
+            button {
+                width: 7rem;
+                height: 7rem;
+                position: relative;
+                background-color: #A37169;
+                border: none;
+                color: $color-dark-grey;
+                font-size: $font-size-main;
+                text-transform: uppercase;
+                font-weight: 600;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+                span {
+                    position: absolute;
+                    transform: translate(-50%, -50%) rotate(-45deg);
+                    display: inline-block;
+                }
+                &:hover {
+                    background-color: $color-r;
+                    color: $color-light;
+                    transition: 0.25s ease-in-out;
+                }
+            }
+            .selected {
+                background-color: $color-r;
+                color: $color-light;
+                transition: 0.25s ease-in-out;
+            }
+        }
+        .tabs-content {
+            flex: 2;
+            color: $color-light;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            @include flex-box(center, none, column);
+            h2 {
+                font-size: $font-xxl;
+                margin-bottom: 2rem;
+            }
+            p {
+                margin-bottom: 2rem;
+            }
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        .tabs-gallery {
+            flex: 2;
+            gap: 0.5rem;
+            @include flex-box(center, none, column);
+            .gallery-top, .gallery-bottom {
+                @include flex-box(center, none, row);
+                gap: 0.5rem;
+            }
+            button {
+                border: none;
+                background: none;
+                margin: 0;
+                padding: 0;
+                line-height: 0;
+                cursor: pointer;
+                position: relative;
+                display: inline-block;
+                overflow: hidden;
+                &::before {
+                    content: 'Explore';
+                    position: absolute;
+                    top: 6px;
+                    left: 9px;
+                    right: 8px;
+                    bottom: 11px;
+                    background-color: #e27866be;
+                    color: white;
+                    font-size: $font-l;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                    pointer-events: none;
+                    z-index: 1;
+                }
+                &:hover::before {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .about {
+        scroll-margin-top: 80px; 
+        background-color: $color-dark;
+        @include flex-box(none, center, row);
+        gap: 2rem;
+        @include section-padding(4rem 10rem, 3rem 2rem);
+        @media only screen and (max-width: 992px) {
+            @include flex-box(none, none, column);
+        }
+        .about-logo {
+            flex: 1;
+            @include flex-box(center, none, row);
+            img {
+                width: 25rem;
+            }
+        }
+        .about-info {
+            flex: 1;
+            color: $color-light;
+            margin-right: 4rem;
+            @media only screen and (max-width: 992px) {
+                margin-right: 0rem;
+            }
+            h2 {
+                margin-top: 2rem;
+                font-size: $font-xl;
+            }
+            p.info-line {
+                margin: 3rem 0;
+                @include heading-line-left($color-r, 10rem);
+            }
+            .about-card {
+                @include flex-box(none, center, row);
+                gap: 1rem;
+                margin-top: 2rem;
+                p:first-child {
+                    font-weight: 600;
+                    margin-bottom: 0.5rem
+                }
+            }
+        }
+    }
+
+    .features-section {
+        scroll-margin-top: 80px;
+        @include section-padding(6rem 10rem, 3rem 2rem);
+        .features-section-info {
+            text-align: center;
+            margin-bottom: 5rem;
+            @media only screen and (max-width: 992px) {
+                margin-bottom: 0;
+            }
+            h2 {
+                font-size: $font-xxl;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            p {
+                margin: 3rem 0;
+                @include heading-line($color-r, 5rem);
+            }
+        }
+        .features-container {
+            gap: 5rem;
+            @include flex-box(center, normal, row);
+            @media only screen and (max-width: 992px) {
+                @include flex-box(none, center, column);
+                gap: 2rem;
+            }
+            .features-element {
+                flex: 1;
+                text-align: center;
+                gap: 1rem;
+                @include flex-box(none, center, column);
+                h3 {
+                    font-size: $font-l;
+                    font-weight: normal;
+                }
+                img {
+                    width: 4rem;
+                }
+            }
+        }
+    }
+
+    .pricing {
+        scroll-margin-top: 80px;
+        background-color: $color-b;
+        color: $color-light;
+        @include section-padding(6rem 10rem, 3rem 2rem);
+        .pricing-info {
+            text-align: center;
+            margin-bottom: 5rem;
+            @media only screen and (max-width: 992px) {
+                margin-bottom: 0;
+            }
+            h2 {
+                font-size: $font-xxl;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            p {
+                margin: 3rem 0;
+                @include heading-line($color-g, 5rem);
+            }
+        }
+        .pricing-plans {
+            gap: 2rem;
+            @include flex-box(center, end, row);
+            @media only screen and (max-width: 992px) {
+                @include flex-box(none, center, column);
+                gap: 2rem;
+            }
+            .plan {
+                min-width: 22rem;
+                max-width: 22rem;
+                text-align: center;
+                .plan-price {
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                    background-color: $color-dark;
+                    padding: 1rem;
+                    h3 {
+                        font-size: $font-l;
+                        font-weight: normal;
+                    }
+                    p:nth-child(2) {
+                        margin-top: 1rem;
+                        font-size: $font-xxl;
+                        span {
+                            font-size:94px;
+                        }
+                    }
+                    p:nth-child(3) {
+                        margin: 0.5rem 0;
+                        color: $color-dark-grey;
+                    }
+                }
+                .plan-mark {
+                    background-color: $color-g;
+                    padding: 0.25rem;
+                    p {
+                        padding: 0.25rem;
+                        text-transform: uppercase;
+                    }
+                }
+                .plan-info {
+                    background-color: $color-light;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    p {
+                        padding: 0.75rem;
+                        text-transform: uppercase;
+                        color: $color-dark;
+                    }
+                }
+            }
+        }
+    }
+
+    .reviews {
+        scroll-margin-top: 80px;
+        @include section-padding(6rem 10rem, 3rem 2rem);
+        .reviews-info {
+            text-align: center;
+            margin-bottom: 5rem;
+            @media only screen and (max-width: 992px) {
+                margin-bottom: 0;
+            }
+            h2 {
+                font-size: $font-xxl;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            p {
+                margin: 3rem 0;
+                @include heading-line($color-b, 5rem);
+            }
+        }
+        .review-container {
+            @include flex-box(left, flex-end, row);
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            scroll-snap-type: x mandatory;
+            gap: 5rem;
+            scrollbar-width: none; 
+            max-width: calc(15rem * 3 + 10rem);
+            margin: 0 auto;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            @media only screen and (max-width: 992px) {
+                justify-content: left;
+
+            }
+            .review {
+                max-width: 15rem;
+                flex: 0 0 15rem;
+                scroll-snap-align: start;
+                @media only screen and (max-width: 992px) {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    margin: 1rem;
+                }
+                .person-review {
+                    background-color: $color-b;
+                    color: $color-light;
+                    padding: 1rem;
+                    border-radius: 5px;
+                    p {
+                        position: relative;
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            transform: translate(0.5rem, 1.25rem) rotate(45deg);
+                            width: 1rem;
+                            height: 1rem;
+                            background-color: $color-b;
+                        }
+                    }
+                }
+                .personal-info {
+                    @include flex-box(none, center, row);
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    margin-top: 1rem;
+                    div {
+                        p:first-child {
+                            font-size: $font-l;
+                            margin-bottom: 0.25rem;
+                        }
+                    }
+                }
+            }
+            
+        }
+        .review-indicators {
+            @include flex-box(center, center, row);
+            gap: 1rem;
+            margin-top: 5rem;
+            .indicator {
+                padding: 0;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                border: 1px solid $color-r;
+                background-color: $color-light;
+                cursor: pointer;
+                &:hover {
+                    background-color: $color-r;
+                    transition: 0.25s ease-in-out;
+                }
+                &.active {
+                    background-color: $color-r;
+                }
+            }
+        }
+    }
+
+    .contact-us {
+        scroll-margin-top: 80px;
+        background-color: $color-r;
+        @include section-padding(6rem 10rem, 3rem 2rem);
+        .contact-us-info {
+            text-align: center;
+            margin-bottom: 5rem;
+            color: $color-light;
+            @media only screen and (max-width: 992px) {
+                margin-bottom: 0;
+            }
+            h2 {
+                font-size: $font-xxl;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            p {
+                margin: 3rem 0;
+                position: relative;
+            }
+        }
+        
+        .contact-us-form {
+            @include flex-box(center, none, row);
+            #contact-form {
+                background-color: $color-light;
+                border-radius: 5px;
+                padding: 2rem 0;
+                max-width: 22rem;
+                min-width: 22rem;
+            }
+            .heading {
+                text-align: center;
+                font-size: $font-l;
+                font-weight: 600;
+                background-color: $color-grey;
+                padding: 1rem;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                span {
+                    text-transform: uppercase;
+                    color: $color-r;
+                }
+            }
+            fieldset {
+                padding: 0 3rem;
+                margin-bottom: 1rem;
+            }
+            @include input-text;
+            .radios {
+                display: flex;
+                margin-bottom: 1rem;
+                @include radio-button-label;
+            }
+        }
+        .send-center {
+            @include flex-box(center, none, row);
+        }
+        .send {
+            padding: 1rem 4rem;
+            border-radius: 5px;
+            @include button;
+        }
+    }
+    .message {
+        font-size: $font-xxs;
+        color: $color-r;
+    }
+}
+
+.footer {
+    background-color: $color-dark;
+    @include flex-box(space-between, center, row);
+    @include section-padding(3rem 10rem, 3rem 2rem);
+    @media only screen and (max-width: 992px) {
+        gap: 2rem;
+        @include flex-box(none, normal, column);
+    }
+    .social-media-icons-footer {
+        flex: 3;
+        @include flex-box(space-between, none, row);
+        @media only screen and (max-width: 992px) {
+            @include flex-box(center, none, none);
+            gap: 3rem;
+        }
+        img {
+            width: 75%;
+        }
+    }
+    .footer-rights {
+        flex: 4;
+        p {
+            font-size: $font-m;
+            color: $color-dark-grey;
+            text-align: right;
+            @media only screen and (max-width: 992px) {
+                text-align: center;
+            }
+        }
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-overlay-dark;
+    div {
+        text-align: center;
+        background-color: $color-light;
+        color: $color-dark;
+        font-weight: bold;
+        font-size: $font-s;
+        width: 100%;
+        max-width: 70vmin;
+        margin: auto;
+        border-radius: 5px;
+        padding: 2rem;
+        animation: slideIn 0.5s forwards;
+        opacity: 0;
+        transform: translateY(-1rem);
+        @media only screen and (min-width: 576px) {
+            max-width: 55vmin;
+        }
+        p {
+            margin-bottom: 2rem;
+        }
+    }
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateY(1rem);
+        }
+    }
+    button {
+        @include button;
+        padding: 1rem 3rem;
+        border-radius: 5px;
+    }
+}
+
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-overlay-dark;
+    z-index: 3;
+    padding: 2rem;
+    padding-top: 8rem;
+    box-sizing: border-box;
+    display: none;
+    animation: fadeIn 0.5s forwards;
+    opacity: 0;
+    .close {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        img {
+            height: 20px;
+        }
+    }
+    .image-modal-content {
+        margin: 0 auto;
+        height: 90%;
+        display: block;
+        max-width: 100%;
+    }
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+}

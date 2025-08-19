@@ -1,0 +1,118 @@
+@use './vars' as *;
+
+@mixin flex-box($justify, $align, $direction) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+@mixin heading-line($color: $color-r, $width: 5rem) {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -1.5rem);
+        width: $width;
+        height: 3px;
+        background-color: $color;
+    }
+}
+
+@mixin heading-line-left($color, $width) {
+    &::before {
+        content: '';
+        position: absolute;
+        transform: translateY(-1.5rem);
+        width: $width;
+        height: 3px;
+        background-color: $color;
+    }
+}
+
+@mixin background-image($url, $color-one, $color-two) {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to right, $color-one, $color-two), $url;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top;
+        z-index: -1;
+    }
+}
+
+@mixin button {
+    border: none;
+    font-size: $font-m;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $color-light;
+    background-color: $color-g;
+    cursor: pointer;
+    &:hover {
+        background-color: $color-g-hover;
+        transition: 0.25s ease-in-out;
+    }
+}
+
+@mixin radio-button-label {
+    label {
+        position: relative;
+        padding-left: 20px;
+        padding-right: 20px;    
+        text-transform: uppercase;
+        font-size: $font-xs;
+        font-weight: 600;
+        cursor: pointer;
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 1px solid $color-g;
+        }
+    }
+    input[type="radio"] {
+        display: none;
+        &:checked + label::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            border: 1px solid $color-g;
+            background-color: $color-g;
+        }
+    }
+}
+
+@mixin input-text {
+    .inputs {
+        input {
+            width: 100%;
+            margin: 1rem 0;
+            border: none;
+            border-bottom: 2px solid $color-dark-grey;
+            outline: none;
+        }
+    }
+}
+
+@mixin section-padding ($desktop, $mobile) {
+    padding: $desktop;
+    @media only screen and (max-width: 992px) {
+        padding: $mobile;
+    }
+}
